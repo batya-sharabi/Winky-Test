@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const clientId = "357559087367-2fsnvut6uh7rom4go6u6c3ev5epkief3.apps.googleusercontent.com";
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState(
     localStorage.getItem('loginData')
@@ -29,31 +30,20 @@ function Login() {
     localStorage.setItem('loginData', JSON.stringify(data));
     navigate(`/dashboard`);
   };
-  const handleLogout = () => {
-    localStorage.removeItem('loginData');
-    setLoginData(null);
-  };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>React Google Login App</h1>
         <div>
-          {loginData ? (
-            <div>
-              <h3>You logged in as {loginData.email}</h3>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          ) : (
             <GoogleLogin
-              clientId={"357559087367-2fsnvut6uh7rom4go6u6c3ev5epkief3.apps.googleusercontent.com"}
+              clientId={clientId}
               buttonText="Log in with Google"
               onSuccess={handleLogin}
               onFailure={handleFailure}
               cookiePolicy={'single_host_origin'}
               isSignedIn={true}
             ></GoogleLogin>
-          )}
         </div>
       </header>
     </div>
